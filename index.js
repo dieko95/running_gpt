@@ -37,8 +37,6 @@ app.get("/oauth/callback", async (req, res) => {
     // For now, just display token and athlete info (you can later store it securely)
     res.send(`
       <h3>✅ Connected as ${athlete.firstname} ${athlete.lastname}</h3>
-      <p>Your access token is:</p>
-      <pre>${access_token}</pre>
       <p>Now you can use this token to fetch activities from the Strava API.</p>
     `);
   } catch (error) {

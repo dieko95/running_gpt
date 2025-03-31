@@ -4,12 +4,27 @@ require("dotenv").config();
 const express = require("express");
 const axios = require("axios");
 const helmet = require('helmet');
+const session = require('express-session');
+const crypto = require('crypto');
 const app = express();
 
 // Load sensitive data from .env
 const { STRAVA_CLIENT_ID, STRAVA_CLIENT_SECRET, REDIRECT_URI } = process.env;
 
+console.log('Environment variables loaded:');
+console.log('- STRAVA_CLIENT_ID:', STRAVA_CLIENT_ID ? 'Set' : 'Not set');
+console.log('- STRAVA_CLIENT_SECRET:', STRAVA_CLIENT_SECRET ? 'Set' : 'Not set');
+console.log('- REDIRECT_URI:', REDIRECT_URI);
+
 app.use(helmet());
+
+// Session configuration
+app.use(session({
+  secret: process.env.SESSION_SECRET || 'dev-secret-key',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: process.env.NODE_ENV === 'production' }
+}));
 
 // Force HTTPS in production
 if (process.env.NODE_ENV === 'production') {

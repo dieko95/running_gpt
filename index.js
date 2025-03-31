@@ -42,7 +42,7 @@ app.get("/oauth/callback", async (req, res) => {
       <p>Now you can use this token to fetch activities from the Strava API.</p>
     `);
   } catch (error) {
-    console.error("OAuth error:", error.response?.data || error.message);
+    console.error("OAuth error:", error.message);
     res.status(500).send("❌ Failed to exchange code for access token.");
   }
 });
